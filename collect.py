@@ -5,7 +5,7 @@ import time
 import numpy as np
 #import tensorflow as tf
 #from include.model import model
-import csv
+
 import pandas as pd
 
 #sess = tf.Session()
@@ -55,6 +55,7 @@ try:
     hub.run(2000, listener)
     while True:
         data = listener.get_emg_data()
+        #data collection more than 200s
         if time.time() - start >= 200:
             temp = []
             start = time.time()
@@ -63,13 +64,17 @@ try:
             for v in listener.get_emg_data():
                 tmp.append(v[1])
             tmp = list(np.stack(tmp).flatten())
-            if len(tmp) >= 64:                 
+            #push 64-value array with data from each sensor
+            if len(tmp) >= 64:
                 temp.append(tmp)
+                #temp_arr as x column: raw data
                 temp_arr =np.asarray(temp, dtype=np.int64)
-                #y_arr = 
-                #temp = pd.DataFrame(np.array(tmp))
-                #temp = np.append(temp, [tmp])
-                np.savez('wei_test.npz', x = temp_arr, y = '1')
+                # GestureType as y column: label
+                GestureType = np.zeros((temp_arr.shape[0], 6), dtype=np.int64)
+                GestureType_1 = np.ones(temp_arr.shape[0], dtype=np.int64)
+                GestureType[:, 5] = GestureType_1 # change type here
+                # 0 - relax, 1 - fist, 2 - roll, 3 - hold, 4 - drag, 5 - rock
+                np.savez('wei_5.npz', x = temp_arr, y = GestureType) # and change type here
         time.sleep(0.01)
 
 finally:
