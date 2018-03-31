@@ -1,3 +1,5 @@
+import pickle
+
 import numpy as np
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.optimizers import RMSprop
@@ -41,6 +43,10 @@ model_details = model.fit(x_train, y_train,
 
 # Save model
 model.save(im.h5_path)
+
+# Save model history
+with open(im.his_path, 'w+b') as file_pi:
+    pickle.dump(model_details.history, file_pi)
 
 # Evaluate the model
 scores = model.evaluate(x_test, y_test, verbose=0)

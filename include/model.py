@@ -1,4 +1,4 @@
-import os.path
+import os
 from keras.layers import Dense, Dropout
 from keras.models import Sequential, load_model
 
@@ -42,7 +42,8 @@ from keras.models import Sequential, load_model
 #
 #     return x, y, output, global_step, y_pred_cls
 
-h5_path = './data/my_model.h5'
+h5_path = './saved/my_model.h5'
+his_path = './saved/model_history'
 
 
 def get_model(num_class, input_shape=(64,)):
