@@ -8,7 +8,7 @@ from include.data import get_data_set
 class_names = ["Relax", "Ok", "Fist", "Like", "Rock", "Spock"]
 
 # Obtain Data from path. Separate it by train 80% and test 20%
-(x_train, y_train), (x_test, y_test) = get_data_set("./data/train_set.npz")
+(x_train, y_train), (x_test, y_test) = get_data_set("./data/")
 num_class = len(np.unique(y_train))
 
 _BATCH_SIZE = 300
@@ -42,21 +42,26 @@ model_details = model.fit(x_train, y_train,
 # Save model
 model.save(im.h5_path)
 
+# Evaluate the model
 scores = model.evaluate(x_test, y_test, verbose=0)
 print("Accuracy: %.2f%%" % (scores[1] * 100))
 
+# Predictions
 class_pred = model.predict(x_test, batch_size=32)
 print(class_pred[0])
 
+# Predict class for test set gesture
 labels_pred = np.argmax(class_pred, axis=1)
 print(labels_pred)
 
+# Check which labels have been predicted correctly
 correct = (labels_pred == y_test[:, 0]).astype('int32')
 print(correct)
 print("Number of correct predictions: %d" % sum(correct))
 
-num_images = len(correct)
-print("Accuracy: %.2f%%" % ((sum(correct) * 100) / num_images))
+# Calculate accuracy using manual calculation
+num_gesture = len(correct)
+print("Accuracy: %.2f%%" % ((sum(correct) * 100) / num_gesture))
 
 # x, y, output, global_step, y_pred_cls = model(_CLASS_SIZE)
 #
