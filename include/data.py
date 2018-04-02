@@ -2,24 +2,6 @@ import numpy as np
 from os import listdir, path
 
 
-# def get_data_set(path, num_class=6):
-#     npzfile = np.load(path)
-#     array_x = npzfile['x']
-#     array_y = npzfile['y']
-#     # np.random.shuffle(npzfile)
-#     array_raw = np.append(array_x, array_y, axis=1)
-#     np.random.shuffle(array_raw)
-#     size = array_raw.shape[0]
-#     train_data = array_raw[:int(size*0.8)]
-#     test_data = array_raw[int(size*0.8):]
-#     x_train = train_data[:, :-num_class]
-#     y_train = train_data[:, -num_class:]
-#     x_test = test_data[:, :-num_class]
-#     y_test = test_data[:, -num_class:]
-#
-#     return (x_train, y_train), (x_test, y_test)
-
-
 def get_data_set(f_path):
     x_train = None
     y_train = None
