@@ -25,7 +25,7 @@ class MyListener(myo.DeviceListener):
             return list(self.emg_data_queue)
 
 
-def on_emg_data(fun, args, timeout=-1):
+def on_emg_data(fun, args=None, timeout=-1):
     """
     Deal with the emg data
     :param fun: function to handle the data
@@ -47,7 +47,10 @@ def on_emg_data(fun, args, timeout=-1):
             # Collect data for 60 seconds
             if timeout >= 0 and time.time() - start >= float(timeout):
                 # Call non real time function
-                fun(*args, whole_data)
+                if args is None:
+                    fun(whole_data)
+                else:
+                    fun(*args, whole_data)
                 break
             if len(data) > 0:
                 tmp = []
@@ -58,7 +61,10 @@ def on_emg_data(fun, args, timeout=-1):
                 if len(tmp) >= 64:
                     if timeout < 0:
                         # Call real time function
-                        fun(*args, tmp)
+                        if args is None:
+                            fun(tmp)
+                        else:
+                            fun(*args, tmp)
                     else:
                         whole_data.append(tmp)
             time.sleep(0.01)
