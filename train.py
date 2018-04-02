@@ -7,8 +7,6 @@ from keras.optimizers import RMSprop
 import include.model as im
 from include.data import get_data_set
 
-class_names = ["Relax", "Ok", "Fist", "Like", "Rock", "Spock"]
-
 # Obtain Data from path. Separate it by train 80% and test 20%
 (x_train, y_train), (x_test, y_test) = get_data_set("./data/")
 num_class = len(np.unique(y_train))
