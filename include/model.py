@@ -8,7 +8,7 @@ h5_path = save_dir + '/my_model.h5'
 his_path = save_dir + '/model_history'
 
 
-def get_model(num_class, input_shape=(64,)):
+def get_model(num_class=1, input_shape=(64,)):
     # Load saved model if exists
     if os.path.exists(h5_path):
         model = load_model(h5_path)

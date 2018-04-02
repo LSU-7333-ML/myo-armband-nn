@@ -6,7 +6,7 @@ import device
 
 import include.common as ic
 
-model = im.get_model(len(ic.class_names))
+model = im.get_model()
 
 start = time.time()
 

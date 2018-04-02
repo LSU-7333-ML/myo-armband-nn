@@ -4,10 +4,11 @@ import os
 import include.model as im
 import pickle
 from keras.callbacks import History
+from keras.utils import plot_model
 
 
 # Model accuracy and loss plots
-def plot_model(model_details):
+def plot_model_history(model_details):
     # Create sub-plots
     fig, axs = plt.subplots(1, 2, figsize=(15, 5))
 
@@ -43,6 +44,11 @@ if os.path.exists(im.his_path):
     with open(im.his_path, 'rb') as file_pi:
         model_history = History()
         model_history.history = pickle.load(file_pi)
-        plot_model(model_history)
+        plot_model_history(model_history)
 else:
     raise ValueError('No model history found')
+
+# plot model by keras. pydot is required
+# model = im.get_model()
+# plot_model(model, to_file='./Doc/model.png')
+
