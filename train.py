@@ -1,5 +1,6 @@
 import pickle
 
+import os
 import numpy as np
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.optimizers import RMSprop
@@ -40,6 +41,9 @@ model_details = model.fit(x_train, y_train,
                           validation_data=(x_test, y_test),
                           callbacks=[checkpoint, earlyStopping],
                           verbose=1)
+
+if not os.path.exists(im.save_dir):
+    os.makedirs(im.save_dir)
 
 # Save model
 model.save(im.h5_path)
