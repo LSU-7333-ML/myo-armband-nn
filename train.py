@@ -11,7 +11,7 @@ from include.common import class_names
 from include.data import get_data_set
 
 # Obtain Data from path. Separate it by train 80% and test 20%
-(x_train, y_train), (x_test, y_test) = get_data_set("./data/")
+(x_train, y_train), (x_test, y_test) = get_data_set()
 num_class = len(np.unique(y_train))
 
 _BATCH_SIZE = 300
@@ -31,7 +31,7 @@ checkpoint = ModelCheckpoint(im.h5_path,  # model filename
                              # The latest best model will not be overwritten
                              mode='auto')  # The decision to overwrite model
 
-earlyStopping = EarlyStopping(monitor="val_loss", patience=5, verbose=0,
+earlyStopping = EarlyStopping(monitor="val_loss", patience=100, verbose=0,
                               mode='auto')
 
 model_details = model.fit(x_train, y_train,
@@ -42,8 +42,8 @@ model_details = model.fit(x_train, y_train,
                           callbacks=[checkpoint, earlyStopping],
                           verbose=1)
 
-if not os.path.exists(im.save_dir):
-    os.makedirs(im.save_dir)
+# if not os.path.exists(im.save_dir):
+#    os.makedirs(im.save_dir)
 
 # Save model
 model.save(im.h5_path)
