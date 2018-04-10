@@ -56,19 +56,19 @@ def on_emg_data(fun, args=None, timeout=-1):
                 tmp = []
                 for v in data:
                     tmp.append(v[1])
-                tmp = list(np.stack(tmp).flatten())
-                # push 64-value array with data from each sensor
-                if len(tmp) >= 64:
-                    if timeout < 0:
-                        # Call real time function
-                        if args is None:
-                            fun(tmp)
-                        else:
-                            fun(*args, tmp)
-                    else:
-                        whole_data.append(tmp)
+                    if len(tmp) >= 2:                        
+                        tmp = list(np.stack(tmp).flatten())
+                        # push 64-value array with data from each sensor
+                        if len(tmp) >= 16:
+                            if timeout < 0:
+                                # Call real time function
+                                if args is None:
+                                    fun(tmp)
+                                else:
+                                    fun(*args, tmp)
+                            else:
+                                whole_data.append(tmp)
+                        tmp = []
             time.sleep(0.01)
     finally:
         hub.shutdown()
-
-
